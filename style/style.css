@@ -1,126 +1,201 @@
+/* Base Layout */
 body {
   font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
   margin: 0;
   padding: 0;
-  background: #fafafa;
+  color: #333;
 }
 
-/* Header styling */
+/* Header */
 header {
-  padding: 20px 30px;
-  border-bottom: 5px solid #dc4405; /* ⬅ thicker border */
-  background: #fff;
-  position: relative;
+  text-align: center;
+  background-color: #dc4405; /* OSU orange */
+  border-bottom: 4px solid #ffffff; /* White accent border */
+  padding: 1.5rem 0;
+  margin-bottom: 2rem;
+  color: white;
 }
 
 h1 {
-  font-size: 32px;
-  color: #3a3a3a;
-  margin: 0; /* ⬅ remove top/bottom gaps */
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 600;
+  color: white;
 }
 
-/* Question number list */
+/* Quiz Layout */
+.quiz-layout {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  flex-wrap: wrap;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Quiz Container */
+#quiz-container {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  flex: 1 1 600px;
+  padding: 2rem;
+  min-width: 300px;
+  border: 2px solid #dc4405; /* Orange border accent */
+}
+
+#question {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  color: #dc4405;
+}
+
+#options {
+  margin-bottom: 1.5rem;
+}
+
+#options button {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: 2px solid #dc4405;
+  background: white;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+#options button:hover {
+  background-color: #ffe8dd;
+}
+
+/* Navigation Buttons */
+#navigation {
+  display: flex;
+  justify-content: space-between;
+}
+
+#navigation button {
+  background-color: #dc4405;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s, transform 0.1s;
+}
+
+#navigation button:hover {
+  background-color: #b73a04;
+  transform: scale(1.05);
+}
+
+/* Question List */
 #question-number-list {
-  position: absolute;
-  top: 120px;  /* ⬅ was 80px, now lower */
-  right: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background-color: white;
+  border: 3px solid #dc4405;
+  border-radius: 1rem;
+  padding: 1rem;
+  min-width: 160px;
+  margin-top: 1rem;
+}
+
+#question-number-list button {
+  background-color: #ffe8dd;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  color: #dc4405;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+#question-number-list button:hover {
+  background-color: #dc4405;
+  color: white;
+}
+
+#question-number-list button.active {
+  background-color: #dc4405;
+  color: white;
+}
+
+/* 📱 Responsive Adjustments */
+@media (max-width: 768px) {
+  header {
+    padding: 1rem 0;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .quiz-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  #question-number-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    min-width: unset;
+  }
+
+  #question-number-list button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  #quiz-container {
+    padding: 1.5rem;
+  }
+}
+
+/* ===== FOOTER ===== */
+/* Footer stays at bottom */
+footer {
+  flex-shrink: 0; /* do not shrink */
+  border-top: 2px solid #ccc;
+  background-color: #f8f8f8;
+  text-align: center;
+  padding: 1rem 0;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+footer a {
+  color: #dc4405;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+footer a:hover {
+  color: #b73a04;
+  text-decoration: underline;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
 }
 
-#question-number-list button {
-  margin: 3px 0;
-  width: 110px; /* ⬅ wider for text */
-  height: 35px;
-  border: 1px solid #aaa;
-  background: #f0f0f0;
-  cursor: pointer;
-  border-radius: 6px;
-  transition: background 0.2s;
-  text-align: left;
-  padding-left: 8px;
-  font-size: 14px;
-}
-
-#question-number-list button:hover {
-  background: #d0e4ff;
-}
-
-#question-number-list button.active {
-  background: #cce5ff;
-  border-color: #007bff;
-}
-
-/* Quiz container */
-#quiz-container {
-  width: 60%;
-  margin: 80px auto; /* ⬅ lowers the box a bit from the top */
-  border: 1px solid #ccc;
-  padding: 25px 30px;
-  border-radius: 10px;
-  background: #fff;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-/* Reduce the top space above the question text */
-#question {
-  margin-top: 5px; /* ⬅ was too high */
-  margin-bottom: 20px;
-}
-
-.option {
-  display: block;
-  margin: 8px 0;
-}
-
-/* Navigation buttons */
-#navigation {
-  margin-top: 20px;
-}
-
-#navigation button {
-  margin-right: 10px;
-  padding: 8px 16px;
-  border: 1px solid #ccc;
-  background: #f9f9f9;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#navigation button:hover {
-  background: #e6e6e6;
-}
-
-#navigation button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* Optional footer styling */
-footer {
-  margin-top: 2em;
-  padding-top: 1em;
-  border-top: 1px solid #ccc;
-  font-size: 0.9em;
-  color: #666;
-}
-
-.follow-up {
-  margin-top: 15px;
-  text-align: left;
-}
-
-.follow-up-input {
-  width: 50%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  margin-top: 5px;
-  transition: all 0.3s ease;
-}
-
-.follow-up-input:focus {
-  border-color: #007bff;
-  outline: none;
-  box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+/* Make page content grow to fill space above footer */
+.page-content {
+  flex: 1 0 auto; /* grow, don’t shrink */
 }

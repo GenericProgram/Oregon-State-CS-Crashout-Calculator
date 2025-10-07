@@ -1,10 +1,14 @@
 const quizData = [
   {
+    question: "What is your favorite color?",
+    options: ["Red", "Blue", "Green", "Yellow"]
+  },
+  {
     question: "Do you have a favorite number?",
     options: ["Yes", "No"],
     followUp: {
-      trigger: "Yes",          // When this option is selected
-      type: "number",          // Input type: number, text, etc.
+      showOn: "Yes",
+      inputType: "number",
       placeholder: "Enter your favorite number"
     }
   },
@@ -13,8 +17,8 @@ const quizData = [
     options: ["Dog", "Cat", "Bird", "Fish"]
   },
   {
-    question: "What is your preferred mode of travel?",
-    options: ["Car", "Bicycle", "Plane", "Train"]
+    question: "Which season do you enjoy the most?",
+    options: ["Spring", "Summer", "Autumn", "Winter"]
   }
 ];
 
@@ -32,7 +36,7 @@ function renderQuestion(index) {
   questionElement.textContent = `Question ${index + 1}: ${q.question}`;
   optionsElement.innerHTML = "";
 
-  q.options.forEach((option, i) => {
+  q.options.forEach((option) => {
     const label = document.createElement("label");
     label.classList.add("option");
     label.innerHTML = `
@@ -42,30 +46,27 @@ function renderQuestion(index) {
     optionsElement.appendChild(label);
   });
 
-  // If question has a follow-up
+  // Handle conditional follow-up input
   if (q.followUp) {
-    const followUpDiv = document.createElement("div");
-    followUpDiv.classList.add("follow-up");
-    followUpDiv.style.maxHeight = "0"; // collapsed
-    followUpDiv.style.overflow = "hidden";
-    followUpDiv.style.transition = "max-height 0.4s ease";
+    const inputContainer = document.createElement("div");
+    inputContainer.style.marginTop = "10px";
+    inputContainer.style.display = "none";
 
     const input = document.createElement("input");
-    input.type = q.followUp.type || "text";
-    input.placeholder = q.followUp.placeholder || "Enter value...";
-    input.classList.add("follow-up-input");
+    input.type = q.followUp.inputType;
+    input.placeholder = q.followUp.placeholder;
+    input.style.padding = "8px";
+    input.style.width = "100%";
+    input.style.border = "1px solid #dc4405";
+    input.style.borderRadius = "5px";
 
-    followUpDiv.appendChild(input);
-    optionsElement.appendChild(followUpDiv);
+    inputContainer.appendChild(input);
+    optionsElement.appendChild(inputContainer);
 
-    // Listen for option selection
-    optionsElement.querySelectorAll("input[type='radio']").forEach((radio) => {
+    optionsElement.querySelectorAll("input[type='radio']").forEach(radio => {
       radio.addEventListener("change", () => {
-        if (radio.value === q.followUp.trigger) {
-          followUpDiv.style.maxHeight = "100px"; // expand
-        } else {
-          followUpDiv.style.maxHeight = "0"; // collapse
-        }
+        inputContainer.style.display =
+          radio.value === q.followUp.showOn ? "block" : "none";
       });
     });
   }
@@ -79,16 +80,14 @@ function renderQuestion(index) {
 }
 
 function createQuestionList() {
+  questionList.innerHTML = ""; // clear any existing buttons first
   for (let i = 0; i < totalQuestions; i++) {
     const btn = document.createElement("button");
-    btn.textContent = `Question ${i + 1}`;  // 👈 add label
-    btn.classList.add("question-btn");
-
+    btn.textContent = `Question ${i + 1}`;
     btn.addEventListener("click", () => {
       currentQuestion = i;
       renderQuestion(currentQuestion);
     });
-
     questionList.appendChild(btn);
   }
 }
